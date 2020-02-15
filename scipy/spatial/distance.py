@@ -1524,13 +1524,12 @@ def sokalmichener(u, v, w=None):
 
     .. math::
 
-       \\frac{R}
-            {S + R}
+       \\frac{c_{TF} + c_{FT} }
+            { c_{TT} + c_{FF} + c_{FT} + c_{TF} }
 
     where :math:`c_{ij}` is the number of occurrences of
     :math:`\\mathtt{u[k]} = i` and :math:`\\mathtt{v[k]} = j` for
-    :math:`k < n`, :math:`R = 2 * (c_{TF} + c_{FT})` and
-    :math:`S = c_{FF} + c_{TT}`.
+    :math:`k < n`.
 
     Parameters
     ----------
@@ -1571,7 +1570,7 @@ def sokalmichener(u, v, w=None):
         ntt = (u * v * w).sum()
         nff = ((1.0 - u) * (1.0 - v) * w).sum()
     (nft, ntf) = _nbool_correspond_ft_tf(u, v)
-    return float(2.0 * (ntf + nft)) / float(ntt + nff + 2.0 * (ntf + nft))
+    return float(ntf + nft) / float(ntt + nff + ntf + nft)
 
 
 def sokalsneath(u, v, w=None):
